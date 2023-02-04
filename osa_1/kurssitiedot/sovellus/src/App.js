@@ -7,27 +7,53 @@ const Header = () => {
   )
 }
 
-
-const Content = () => {
-  const parts = [
-    { name:'Fundamentals of react', exercises: 10},
-    { name:'Using props to pass data', exercises: 7},
-    { name:'State of component', exercises: 14}
-  ]
+const Part1 = () => {
+  const name = 'Fundamentals of react'
+  const exercises = 10
   return (
     <div>
       <p>
-        {parts[0].name} {parts[0].exercises}
+      {name} {exercises}
       </p>
+    </div>
+
+  )
+}
+
+const Part2 = () => {
+  const name = 'Using props to pass data'
+  const exercises = 7
+  return (
+    <div>
       <p>
-      {parts[1].name} {parts[1].exercises}
+      {name} {exercises}
       </p>
+    </div>
+
+  )
+}
+const Part3 = () => {
+  const name = 'State of component'
+  const exercises = 14
+  return (
+    <div>
       <p>
-      {parts[2].name} {parts[2].exercises}
+      {name} {exercises}
       </p>
+    </div>
+
+  )
+}
+const Content = () => {
+  return (
+    <div>
+      <Part1 />
+      <Part2 />
+      <Part3 />
     </div>
   )
 }
+ 
 
 const App = () => {
   const part1 = 'Fundamentals of React'
