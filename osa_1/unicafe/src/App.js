@@ -16,6 +16,34 @@ const Display = (props) => {
   )
 }
 
+const Total = props => {
+  return (
+    <div>
+      <b>all {props.good + props.neutral + props.bad}</b>
+    </div>
+  )
+}
+const Average = (props) => {
+  const total = props.good + props.neutral + props.bad
+  const score = props.good - props.bad
+  const average = score/total
+  return (
+    <div>
+      <b>average {average}</b>
+    </div>
+  )
+}
+
+const Positive = (props) => {
+  const total = props.good + props.neutral + props.bad
+  const positive = (props.good/total)*100
+  return(
+    <div>
+      <b>positive {positive} %</b>
+    </div>
+  )
+}
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const header = 'Give feedback'
@@ -44,6 +72,10 @@ const App = () => {
       <Display counter={good} text="good"/>
       <Display counter={neutral} text="neutral"/>
       <Display counter={bad} text="bad"/>
+      <Total good={good} neutral={neutral} bad={bad} />
+      <Average good={good} neutral={neutral} bad={bad} />
+      <Positive good={good} neutral={neutral} bad={bad}/>
+      
 
     </div>
   )
