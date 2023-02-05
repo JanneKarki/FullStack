@@ -17,6 +17,7 @@ const Display = (props) => {
 }
 
 
+
 const Statistics = (props) => {
   const good = props.good
   const neutral = props.neutral
@@ -25,6 +26,14 @@ const Statistics = (props) => {
   const score = good - bad
   const positive = (good/total)*100
   const average = score/total
+
+  if (total === 0) {
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
   return (
     <div>
       <Display text="good" value={good} />
