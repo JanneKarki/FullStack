@@ -10,7 +10,7 @@ const Header = ({header}) => {
   const Content = ({props}) => {
     return (
       <div>
-        {props.map(part => <p>{part.name} {part.exercises}</p>)}
+        {props.map(part => <p key={part.id}>{part.name} {part.exercises}</p>)}
       </div>
     )
   }
@@ -29,6 +29,7 @@ const Header = ({header}) => {
       <div>
         <Header header={course} />
         <Content props={course.parts} />
+        
        
       </div>
     )
