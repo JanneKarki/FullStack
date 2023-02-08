@@ -14,23 +14,25 @@ const Header = ({header}) => {
       </div>
     )
   }
-  /*
+  
   const Total = ({props}) => {
+    let sum = 0
+    props.map(part => sum+= part.exercises)
+    console.log(sum)
     return (
       <div>
-  
-        <p>Number of exercises {props[0].exercises + props[1].exercises + props[2].exercises}</p>
+         
+        <b>total of {sum} exercises </b>
       </div>
     )
   }
-  */
+  
   const Course = ({course}) => {
     return ( 
       <div>
         <Header header={course} />
         <Content props={course.parts} />
-        
-       
+        <Total props={course.parts} />
       </div>
     )
   }
