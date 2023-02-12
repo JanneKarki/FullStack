@@ -36,11 +36,19 @@ const App = () => {
       const nameObject = {
         name: newName,
         number: newNumber
+      
     }
     console.log('Button clicked', event.target)
-    setPersons(persons.concat(nameObject))
-    setNewName('')
-    setNewNumber('')
+      setPersons(persons.concat(nameObject))
+      setNewName('')
+      setNewNumber('')
+    axios
+      .post('http://localhost:3001/persons', nameObject)
+      .then(response => {
+        console.log(response)
+      })
+    
+      
   }
   }
   const handleNameChange = (event) => {
