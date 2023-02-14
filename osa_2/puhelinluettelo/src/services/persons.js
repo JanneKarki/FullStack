@@ -13,11 +13,13 @@ const remove = (id) => {
     const removeUrl = (`http://localhost:3001/persons/${id}`)
     axios.delete(removeUrl)
     console.log(`removed ${removeUrl}`)
+    
     return axios.get(baseUrl)
   }
+  
 
 export default { 
   getAll: getAll, 
   create: create,
-  remove: remove  
+  remove: remove,  
 }

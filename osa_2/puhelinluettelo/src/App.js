@@ -15,6 +15,7 @@ const App = () => {
 
     console.log('effect')    
     nameService
+    
       .getAll()
       .then(response => {
         console.log('promise fulfilled')
@@ -28,6 +29,14 @@ const App = () => {
       persons.find(person => person.name === name)
     )
   }
+  function searchNameById(id) {
+    for (const data in persons){
+      if(persons[data].id === parseInt(id) ) {
+        return persons[data].name
+      }
+    }
+
+  }
 
   const addName = (event) => {
     event.preventDefault()
@@ -39,7 +48,7 @@ const App = () => {
         number: newNumber
       
     }
-    console.log('Button clicked', event.target)
+    console.log('Button clicked')
     nameService
       .create(nameObject)
       .then(response => {
@@ -49,15 +58,19 @@ const App = () => {
       })   
   }
   }
-  const removeName = (person) => {
-    const id = person
+  const removeName = (id) => {
+    const name = searchNameById(id)
+       if ( window.confirm(`Poistetaanko ${name} luettelosta`)) {
     nameService
       .remove(id)
       .then(response => {
         console.log('Remove fulfilled')
         setPersons(response.data)
-  })
-}
+      })
+    }
+  }
+
+ 
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -85,7 +98,7 @@ const App = () => {
   ? persons
   : persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()) )
 
-  
+
 
   return (
     <div>
