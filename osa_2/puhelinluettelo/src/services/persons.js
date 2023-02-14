@@ -9,7 +9,15 @@ const create = newObject => {
   return axios.post(baseUrl, newObject)
 }
 
+const remove = (id) => {
+    const removeUrl = (`http://localhost:3001/persons/${id}`)
+    axios.delete(removeUrl)
+    console.log(`removed ${removeUrl}`)
+    return axios.get(baseUrl)
+  }
+
 export default { 
   getAll: getAll, 
-  create: create  
+  create: create,
+  remove: remove  
 }

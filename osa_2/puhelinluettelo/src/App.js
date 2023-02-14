@@ -46,15 +46,19 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNewName('')
         setNewNumber('')
-      })
-      
-  
-    
-    
-    
-      
+      })   
   }
   }
+  const removeName = (person) => {
+    const id = person
+    nameService
+      .remove(id)
+      .then(response => {
+        console.log('Remove fulfilled')
+        setPersons(response.data)
+  })
+}
+
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -69,6 +73,12 @@ const App = () => {
     console.log(event.target.value)
     setNewFilter(event.target.value)
     
+  }
+
+  const handleRemoveClick = (event) => {
+    console.log(event.target.id)
+    removeName(event.target.id)
+
   }
 
   const namesToShow = showAll
@@ -91,7 +101,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons namesToShow={namesToShow} />
+      <Persons
+      namesToShow={namesToShow}
+      removeName={removeName}
+      handleRemoveClick={handleRemoveClick}
+       />
     </div>
   )
 
