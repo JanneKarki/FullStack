@@ -35,13 +35,21 @@ const App = () => {
         return persons[data].name
       }
     }
-
   }
-
+  function searchIdByName(name) {
+    for (const data in persons) {
+      if (persons[data].name === name) {
+        return persons[data].id
+      }
+    }
+  }
   const addName = (event) => {
     event.preventDefault()
     if (searchName(newName)) {
-      window.alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        updateName()
+      }
+      
     } else{ 
       const nameObject = {
         name: newName,
@@ -60,7 +68,8 @@ const App = () => {
   }
   const removeName = (id) => {
     const name = searchNameById(id)
-       if ( window.confirm(`Poistetaanko ${name} luettelosta`)) {
+
+       if ( window.confirm(`Poistetaanko ${name}luettelosta`)) {
     nameService
       .remove(id)
       .then(response => {
@@ -69,7 +78,15 @@ const App = () => {
       })
     }
   }
-
+const updateName = () => {
+  const id = searchIdByName(newName)
+  nameService
+    .update(id, {name: newName, number: newNumber})
+    .then( response => {
+      console.log("Updated")
+      setPersons(persons.map(person => person.id !== id ? person : response.data))
+    })
+}
  
 
   const handleNameChange = (event) => {
