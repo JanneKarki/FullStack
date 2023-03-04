@@ -18,6 +18,19 @@ const Notification = ({ message }) => {
   }
   
 }
+const ErrorNotification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  else {
+    return (
+      <div className='error'>
+        {message}
+      </div>
+    )
+  }
+  
+}
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -26,6 +39,7 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
   const [showAll, setShowAll] = useState('')
   const [Message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   
   useEffect(() => {    
 
@@ -89,7 +103,11 @@ const App = () => {
   }
   const removeName = (id) => {
     const name = searchNameById(id)
-       if ( window.confirm(`Poistetaanko ${name}luettelosta`)) {
+    if (!name) {
+      console.log(`Person with ID ${id} does not exist.`);
+      return;
+    }
+       if ( window.confirm(`Poistetaanko ${name} luettelosta`)) {
     nameService
       .remove(id)
       .then(response => {
@@ -97,6 +115,12 @@ const App = () => {
         console.log(response.data)
         setPersons(response.data)
       })
+      .catch(error => {
+        setErrorMessage(`Information of ${name} has already been removed from the server`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 4000);
+      });
     }
   }
 const updateName = () => {
@@ -106,11 +130,17 @@ const updateName = () => {
     .then( response => {
       console.log("Updated")
       setPersons(persons.map(person => person.id !== id ? person : response.data))
-    })
-    setMessage(`Updated ${newName}`)
+      setMessage(`Updated ${newName}`)
       setTimeout(() => {
         setMessage(null)
       }, 4000)
+    })
+    .catch(error => {
+      setErrorMessage(`Information of ${newName} has already been removed from the server`);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 4000);
+    });
 }
  
 
@@ -146,6 +176,7 @@ const updateName = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={Message} />
+      <ErrorNotification message={errorMessage} />
       <div>
        <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/> 
       </div>
