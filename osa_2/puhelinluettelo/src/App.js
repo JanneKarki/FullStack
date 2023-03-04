@@ -68,12 +68,12 @@ const App = () => {
   }
   const removeName = (id) => {
     const name = searchNameById(id)
-
        if ( window.confirm(`Poistetaanko ${name}luettelosta`)) {
     nameService
       .remove(id)
       .then(response => {
         console.log('Remove fulfilled')
+        console.log(response.data)
         setPersons(response.data)
       })
     }

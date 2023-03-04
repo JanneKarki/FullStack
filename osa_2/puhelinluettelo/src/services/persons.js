@@ -11,8 +11,9 @@ const create = newObject => {
 
 const remove = (id) => {
     const removeUrl = (`http://localhost:3001/persons/${id}`)
+    axios.delete(removeUrl)
     console.log(`removed ${removeUrl}`)
-    return axios.delete(removeUrl)
+    return axios.get(baseUrl)
   }
   
 const update = (id, updatedObject) => {
