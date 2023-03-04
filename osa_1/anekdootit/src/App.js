@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Button = (props) => {
   return (
@@ -19,18 +19,39 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState([0,0,0,0,0,0,0,0])
+
   const randomSelection = () => {
-    setSelected(Math.floor(Math.random() * 9))
+    const number = Math.floor(Math.random() * 8)
+    setSelected(number)
   }
+  
+  function handleVoteClick() {
+    let copy = [...votes]
+    copy[selected] += 1 
+    setVotes(copy)
+    console.log(votes)
+    
+  }
+
+
+  useEffect(() => {
+    console.log("Selected:", selected);
+  }, [selected]);
+  
+
   return (
     <div>
       
       <p>{anecdotes[selected]}</p>
-
-      <p><Button handleClick={randomSelection} text="next anecdote" /></p>
-      
+     
+      <p><Button handleClick={handleVoteClick} text="vote" /> <Button handleClick={randomSelection} text="next anecdote" />
+      </p>
+       <p>has { votes[selected]} votes</p>
+       
     </div>
   )
 }
