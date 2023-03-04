@@ -3,6 +3,21 @@ import AddNew from './components/AddNew'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import nameService from './services/persons'
+import './index.css'
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  else {
+    return (
+      <div className='message'>
+        {message}
+      </div>
+    )
+  }
+  
+}
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -10,6 +25,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [showAll, setShowAll] = useState('')
+  const [Message, setMessage] = useState(null)
   
   useEffect(() => {    
 
@@ -63,7 +79,12 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNewName('')
         setNewNumber('')
-      })   
+      })
+      setMessage(`Added ${newName}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 4000)
+
   }
   }
   const removeName = (id) => {
@@ -86,6 +107,10 @@ const updateName = () => {
       console.log("Updated")
       setPersons(persons.map(person => person.id !== id ? person : response.data))
     })
+    setMessage(`Updated ${newName}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 4000)
 }
  
 
@@ -120,6 +145,7 @@ const updateName = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={Message} />
       <div>
        <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/> 
       </div>
