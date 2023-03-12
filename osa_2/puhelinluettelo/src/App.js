@@ -61,7 +61,8 @@ const App = () => {
   }
   function searchNameById(id) {
     for (const data in persons){
-      if(persons[data].id === parseInt(id) ) {
+      if(persons[data].id === id ) {
+        console.log(`Nimi löytyi ${persons[data].name}`)
         return persons[data].name
       }
     }
@@ -103,6 +104,7 @@ const App = () => {
   }
   const removeName = (id) => {
     const name = searchNameById(id)
+    console.log(`remonveName called with  this id ${id}`)
     if (!name) {
       console.log(`Person with ID ${id} does not exist.`);
       return;
