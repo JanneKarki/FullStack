@@ -5,7 +5,7 @@ POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
 
 {  
-    "title": "breakfast",
+    "title": "pancake",
     "author": "chef",
     "url": "www.foodchef.org",
     "likes": 647
