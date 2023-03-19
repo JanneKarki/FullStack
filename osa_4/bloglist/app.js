@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const Blog = require('./models/blog')
+const blogsRouter = require('./controllers/blogs')
 
 const url = config.MONGODB_URI
 
@@ -15,12 +16,12 @@ mongoose.connect(url)
 .catch((error) => {
   console.log('error connecting to MongoDB:', error.message)
 })
-
+app.use('api/blogs', blogsRouter)
 app.use(cors())
 app.use(express.json())
 
 app.get('/api/blogs', (request, response) => {
-  Blog
+    Blog
     .find({})
     .then(blogs => {
       response.json(blogs)
