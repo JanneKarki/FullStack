@@ -47,6 +47,22 @@ function mostBlogs(blogs) {
       blogs: blogCounts[mostWrittenBlogs]
     }
   }
+
+function mostLikes(blogs) {
+  if (blogs.length === 0) {
+    return null
+  }
+  
+  const likesByAuthor = _.groupBy(blogs, 'author')
+  const authorLikes = _.mapValues(likesByAuthor, (blogs) => _.sumBy(blogs, 'likes'))
+  const mostLiked = _.maxBy(_.keys(authorLikes), (author) => authorLikes[author])
+  
+  return {
+    author: mostLiked,
+    likes: authorLikes[mostLiked]
+  }
+}
+
   
 
   module.exports = {
@@ -54,4 +70,5 @@ function mostBlogs(blogs) {
     totalLikes,
     favoriteBlog,
     mostBlogs,
+    mostLikes,
   }
