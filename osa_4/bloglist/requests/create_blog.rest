@@ -1,0 +1,20 @@
+GET http://localhost:3003/
+
+###
+POST http://localhost:3003/api/blogs HTTP/1.1
+content-type: application/json
+
+{  
+    "title": "meal",
+    "author": "chef",
+    "url": "www.foodchef.org",
+    "likes": 677
+}
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{  
+    "name": "Seppo Talssssmaa",
+    "number": "040-1231231"
+}

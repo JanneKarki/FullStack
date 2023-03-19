@@ -2,3 +2,4 @@ node_modules/
 osa_1/kurssitiedot/node_modules/
 osa_1/unicafe/node_modules/
 osa_1/anekdootit/node_modules/
+.env
