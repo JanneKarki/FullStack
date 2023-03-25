@@ -24,6 +24,7 @@ describe('Blogs id is defined', () => {
 })
 
 describe('Blogs Post request', () => {
+  
   test('post a new blog creates new blog post', async () => {
     const testBlog = {
       title: 'Poetry',
@@ -57,6 +58,30 @@ describe('Blogs Post request', () => {
     const savedBlog = response.body
     expect(savedBlog.likes).toBeDefined()
     expect(savedBlog.likes).toBe(0)
+  })
+
+  test('responds 400 Bad Request when itle is missing', async () => {
+    const newBlog = {
+      author: 'Arthur',
+      url: 'https://poets.com',
+      likes: 10
+    }
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+  })
+
+  test('responds 400 Bad Request when url is missing', async () => {
+    const newBlog = {
+      title: 'Poetry',
+      author: 'Arthur',
+      likes: 10
+    }
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
   })
 })
 
