@@ -31,20 +31,32 @@ describe('Blogs Post request', () => {
       url: 'https://poets.com',
       likes: 51
     }
-  
+
     const currentBlogs = await api.get('/api/blogs')
-  
     await api
       .post('/api/blogs')
       .send(testBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
-  
+
     const response = (await api.get('/api/blogs'))
     const updatedBlogs = response.body
     expect(updatedBlogs).toHaveLength(currentBlogs.body.length + 1)
-
     expect(updatedBlogs[updatedBlogs.length-1]).toMatchObject(testBlog)
+  })
+
+  test('missing likes is set to 0', async () => {
+    const testBlog = {
+      title: 'Poetry',
+      author: 'Arthur',
+      url: 'https://poets.com',
+    }
+
+    const response = await api.post('/api/blogs').send(testBlog).expect(201).expect('Content-Type', /application\/json/)
+
+    const savedBlog = response.body
+    expect(savedBlog.likes).toBeDefined()
+    expect(savedBlog.likes).toBe(0)
   })
 })
 
