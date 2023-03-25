@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
+const helper = require('./test_helper')
 
 const api = supertest(app)
 
@@ -40,8 +41,7 @@ describe('Blogs Post request', () => {
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const response = (await api.get('/api/blogs'))
-    const updatedBlogs = response.body
+    const updatedBlogs = await helper.blogsInDb()
     expect(updatedBlogs).toHaveLength(currentBlogs.body.length + 1)
     expect(updatedBlogs[updatedBlogs.length-1]).toMatchObject(testBlog)
   })
@@ -82,6 +82,27 @@ describe('Blogs Post request', () => {
       .post('/api/blogs')
       .send(newBlog)
       .expect(400)
+  })
+})
+
+describe('deletion of a blog', () => {
+  test('a blog can be deleted', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+  
+    await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+  
+    expect(blogsAtEnd).toHaveLength(
+      blogsAtStart.length - 1
+    )
+  
+    const id = blogsAtEnd.map(r => r.id)
+  
+    expect(id).not.toContain(blogToDelete.id)
   })
 })
 

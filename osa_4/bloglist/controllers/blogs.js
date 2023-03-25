@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+require('express-async-errors')
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog.find({})
@@ -18,7 +19,7 @@ blogsRouter.get('/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-blogsRouter.post('/', async (request, response, next) => {
+blogsRouter.post('/', async (request, response) => {
   const body = request.body
 
   if (!body.title || !body.url) {
@@ -32,22 +33,16 @@ blogsRouter.post('/', async (request, response, next) => {
     likes: body.likes || 0
   })
 
-  try {
-    const savedBlog = await blog.save()
-    response.status(201).json(savedBlog)
-  } catch (error) {
-    next(error)
-  }
+  const savedBlog = await blog.save()
+  response.status(201).json(savedBlog)
 })
 
 
-blogsRouter.delete('/:id', (request, response, next) => {
-  Blog.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
-    })
-    .catch(error => next(error))
-})
+blogsRouter.delete('/:id', async (request, response) => {
+    await Blog.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  })
+
 
 blogsRouter.put('/:id', (request, response, next) => {
   const body = request.body
