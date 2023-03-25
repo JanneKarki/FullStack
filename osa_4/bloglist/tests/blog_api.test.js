@@ -15,10 +15,8 @@ describe('blogs get method', () => {
 })
 describe('Blogs id is defined', () => {
   test('blogs have id property instead of _id', async () => {
-    const response = await api.get('/api/blogs')
-    const Blogs = response.body
-    console.log(Blogs)
-    Blogs.forEach(blog => {
+    const response = await helper.blogsInDb()
+    response.forEach(blog => {
       expect(blog.id).toBeDefined()
     })
   })
@@ -34,7 +32,7 @@ describe('Blogs Post request', () => {
       likes: 51
     }
 
-    const currentBlogs = await api.get('/api/blogs')
+    const currentBlogs = await helper.blogsInDb()
     await api
       .post('/api/blogs')
       .send(testBlog)
@@ -42,7 +40,7 @@ describe('Blogs Post request', () => {
       .expect('Content-Type', /application\/json/)
 
     const updatedBlogs = await helper.blogsInDb()
-    expect(updatedBlogs).toHaveLength(currentBlogs.body.length + 1)
+    expect(updatedBlogs).toHaveLength(currentBlogs.length + 1)
     expect(updatedBlogs[updatedBlogs.length-1]).toMatchObject(testBlog)
   })
 
@@ -53,7 +51,11 @@ describe('Blogs Post request', () => {
       url: 'https://poets.com',
     }
 
-    const response = await api.post('/api/blogs').send(testBlog).expect(201).expect('Content-Type', /application\/json/)
+    const response = await api
+      .post('/api/blogs')
+      .send(testBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
 
     const savedBlog = response.body
     expect(savedBlog.likes).toBeDefined()
@@ -103,6 +105,23 @@ describe('deletion of a blog', () => {
     const id = blogsAtEnd.map(r => r.id)
   
     expect(id).not.toContain(blogToDelete.id)
+  })
+})
+
+describe('Update blog', () => {
+  test('Update blog likes with put', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const updatedBlog = { ...blogsAtStart[0], likes: blogsAtStart[0].likes + 1 }
+
+    await api
+      .put(`/api/blogs/${blogsAtStart[0].id}`)
+      .send(updatedBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb();
+    const updatedBlogInDb = blogsAtEnd.find(b => b.id === blogsAtStart[0].id)
+    expect(updatedBlogInDb.likes).toEqual(blogsAtStart[0].likes + 1)
   })
 })
 
