@@ -9,3 +9,13 @@ content-type: application/json
     "name": "chef",
     "password": "salainen"
   }
+###
+
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "aatupeetu",
+    "password": "salainen"
+
+}
