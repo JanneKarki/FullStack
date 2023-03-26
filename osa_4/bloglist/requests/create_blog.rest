@@ -1,4 +1,5 @@
 GET http://localhost:3003/api/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhdHVwZWV0dSIsImlkIjoiNjQyMDFiZGI3N2FiMjM4ZWJkZTJjOGI2IiwiaWF0IjoxNjc5ODM3ODU1fQ.K585mkgm-kUbUS11ruOvml7-8kHW7la_rYXou6oCDdM
 
 ###
 POST http://localhost:3003/api/blogs HTTP/1.1
@@ -6,7 +7,7 @@ Content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhdHVwZWV0dSIsImlkIjoiNjQyMDFiZGI3N2FiMjM4ZWJkZTJjOGI2IiwiaWF0IjoxNjc5ODM3ODU1fQ.K585mkgm-kUbUS11ruOvml7-8kHW7la_rYXou6oCDdM
 
 {  
-    "title": "minunomablogi",
+    "title": "minunomablogi2",
     "author": "mistermaister",
     "url": "www.omablogi.org",
     "likes": 622
