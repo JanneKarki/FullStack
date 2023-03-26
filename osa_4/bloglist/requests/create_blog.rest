@@ -5,16 +5,18 @@ POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
 
 {  
-    "title": "pancake",
-    "author": "chef",
+    "title": "diipadaablogi",
+    "author": "aaaa",
     "url": "www.foodchef.org",
     "likes": 647
 }
+
 ###
-POST http://localhost:3001/api/persons HTTP/1.1
+POST http://localhost:3003/api/users HTTP/1.1
 content-type: application/json
 
-{  
-    "name": "Seppo Talssssmaa",
-    "number": "040-1231231"
-}
+ {
+    "username": "apikjssfdfdjhjss",
+    "name": "chef",
+    "password": "assasa212121"
+  }
