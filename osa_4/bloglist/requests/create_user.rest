@@ -4,9 +4,8 @@ GET http://localhost:3003/api/users
 POST http://localhost:3003/api/users HTTP/1.1
 content-type: application/json
 
-{  
+ {
     "username": "mestari",
     "name": "chef",
-    "passwordHash": "abcd1234"
-    
-}
+    "password": "641f422aee6ac6cc94afdee4"
+  }

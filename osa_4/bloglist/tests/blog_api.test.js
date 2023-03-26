@@ -2,8 +2,14 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
+const Blog = require('../models/blog')
 
 const api = supertest(app)
+
+
+beforeEach(async () => {
+  await Blog.deleteMany({})
+})
 
 describe('blogs get method', () => {
   test('blogs are returned as json', async () => {
@@ -89,6 +95,14 @@ describe('Blogs Post request', () => {
 
 describe('deletion of a blog', () => {
   test('a blog can be deleted', async () => {
+
+    const testBlog = helper.testBlog
+    
+    await api
+      .post('/api/blogs')
+      .send(testBlog)
+    
+
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
   
@@ -110,6 +124,11 @@ describe('deletion of a blog', () => {
 
 describe('Update blog', () => {
   test('Update blog likes with put', async () => {
+    const testBlog = helper.testBlog
+    
+    await api
+      .post('/api/blogs')
+      .send(testBlog)
     const blogsAtStart = await helper.blogsInDb()
     const updatedBlog = { ...blogsAtStart[0], likes: blogsAtStart[0].likes + 1 }
 
