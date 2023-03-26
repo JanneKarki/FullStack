@@ -6,9 +6,9 @@ Content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhdHVwZWV0dSIsImlkIjoiNjQyMDFiZGI3N2FiMjM4ZWJkZTJjOGI2IiwiaWF0IjoxNjc5ODM3ODU1fQ.K585mkgm-kUbUS11ruOvml7-8kHW7la_rYXou6oCDdM
 
 {  
-    "title": "tattoos2",
-    "author": "misterink",
-    "url": "www.tattoo.org",
+    "title": "minunomablogi",
+    "author": "mistermaister",
+    "url": "www.omablogi.org",
     "likes": 622
 }
 
@@ -30,4 +30,7 @@ Content-Type: application/json
     "password": "salainen"
 
 }
-
+###
+DELETE http://localhost:3003/api/blogs/64204dda086b8bdf9d8facd0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhdHVwZWV0dSIsImlkIjoiNjQyMDFiZGI3N2FiMjM4ZWJkZTJjOGI2IiwiaWF0IjoxNjc5ODM3ODU1fQ.K585mkgm-kUbUS11ruOvml7-8kHW7la_rYXou6oCDdM
