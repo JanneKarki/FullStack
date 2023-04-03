@@ -3,6 +3,7 @@ const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const api = supertest(app)
 
@@ -31,11 +32,25 @@ describe('Blogs id is defined', () => {
 describe('Blogs Post request', () => {
   
   test('post a new blog creates new blog post', async () => {
+    const newUser = {
+      "username": "apjhjss",
+      "name": "chef",
+      "password": "assasa212121"
+    }
+    await api.post('/api/users').send(newUser)
+    const response = await api.post('/api/login').send({
+      username: newUser.username,
+      password: newUser.password,
+    })
+    const token = response.body.token
+  
+
     const testBlog = {
       title: 'Poetry',
       author: 'Arthur',
       url: 'https://poets.com',
-      likes: 51
+      likes: 51,
+      user: token
     }
 
     const currentBlogs = await helper.blogsInDb()
@@ -105,9 +120,13 @@ describe('deletion of a blog', () => {
 
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
+
+    const user = await User.findById(blogToDelete.user)
+    const token = await getTokenForUser(user)
   
     await api
     .delete(`/api/blogs/${blogToDelete.id}`)
+    .set('Authorization', `Bearer ${token}`)
     .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
